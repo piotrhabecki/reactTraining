@@ -1,7 +1,21 @@
 import React from 'react';
 
 const userInput = (props) =>{
-    return <input type="text" />;
+    const inputStyle = {
+        border: '2px solird red'
+    };
+
+    return <input 
+    type="text" 
+    style={inputStyle}
+    onChange={props.changed} 
+    value={props.currentName} />;
 };
 
-export default userInput;
+const userPassword = (props) =>{
+    return <input 
+    type="password" 
+    onChange={props.changed} />;
+}
+
+export default userInput; userPassword;
