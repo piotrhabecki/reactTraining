@@ -6,8 +6,10 @@ class App extends Component {
 
   state = {
     persons: [
-      { name: 'Piotr', job: 'tester' },
-      { name: 'Pawel', job: 'developer' }
+      { id: 'abc1', name: 'Piotr', job: 'tester' },
+      { id: 'avc2', name: 'Karolina', job: 'tester' },
+      { id: 'def3', name: 'Pawel', job: 'developer' },
+      { id: 'ghi4', name: 'Michał', job: 'junior developer' }
     ],
     showPersons: false
   }
@@ -22,13 +24,28 @@ class App extends Component {
     })
   }
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: event.target.value, job: 'tester developer' },
-        { name: 'Pawel', job: 'developer' }
-      ]
-    })
+  nameChangedHandler = (event, id) => {
+
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    person.name = event.target.value;
+
+    const persons =  [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({persons: persons})
+  }
+
+  deletePersonHandler = (personIndex) => {
+      const persons = [... this.state.persons];
+      persons.splice(personIndex, 1);
+      this.setState({persons: persons});
   }
 
   togglePersonsHandler = () =>{
@@ -52,6 +69,25 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
+    let persons = null;
+
+    if(this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((persons, index) => {
+            return <Person 
+            click={() => this.deletePersonHandler(index)}
+            name={persons.name} 
+            job={persons.job}
+            key={index}
+            changed={(event) => this.nameChangedHandler(event, persons.id)} />
+          })}
+
+      </div> 
+      );
+    }
+
     return (
       <div className="App">
 
@@ -61,23 +97,8 @@ class App extends Component {
           style={style}
           onClick={this.togglePersonsHandler}>{this.whatToWrite()} persons</button>
 
-        { this.state.showPersons ? 
-          <div>
-          <Person
-            name={this.state.persons[0].name}
-            job={this.state.persons[0].job}
-            click={this.switchNameHandler.bind(this, 'Karolina')}
-            changed={this.nameChangedHandler}
-          />
+          {persons}
 
-          <Person
-            name={this.state.persons[1].name}
-            job={this.state.persons[1].job}
-            click={this.switchNameHandler}> My task is: C2E
-          </ Person>
-
-        </div> : null
-        }
       </div>
     );
   }
