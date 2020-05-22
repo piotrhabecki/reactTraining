@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+
 import Person from './Person/Person'
+
 
 class App extends Component {
 
@@ -43,7 +45,7 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-      const persons = [... this.state.persons];
+      const persons = [...this.state.persons];
       persons.splice(personIndex, 1);
       this.setState({persons: persons});
   }
@@ -62,14 +64,6 @@ class App extends Component {
 
   render() {
 
-    const style = {
-      backgroundColor: 'white',
-      font: 'inherti',
-      border: '1x solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     let persons = null;
 
     if(this.state.showPersons) {
@@ -87,19 +81,33 @@ class App extends Component {
       </div> 
       );
     }
+    
+    const classes = [];
+    if(this.state.persons.length <= 2)
+    {
+      classes.push('red');  //classes = ['red']
+    }
+    if (this.state.persons.length <= 1)
+    {
+      classes.push('bold') // classes = ['red', 'bold']
+    }
 
     return (
       <div className="App">
 
         <h1>I'm react page</ h1>
+        <p className={classes.join(' ')}>Check dynamic classes</p>
 
         <button
-          style={style}
-          onClick={this.togglePersonsHandler}>{this.whatToWrite()} persons</button>
+          //alt={this.state.showPersons}
+          onClick={this.togglePersonsHandler}>
+            {this.whatToWrite()} persons
+          </button>
 
           {persons}
 
       </div>
+
     );
   }
 }

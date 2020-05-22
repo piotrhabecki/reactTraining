@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import UserInput from './UserInput/UserInput';
+import {UserInput, UserPassword} from './UserInput/index';
 import UserOutput from './UserOutput/UserOutput';
-import UserPasswod from './UserInput/UserInput';
 
 
 class App extends Component {
@@ -26,7 +25,7 @@ class App extends Component {
         <UserInput 
         changed={this.usernameChangeHandler}
         currentName={this.state.username} />
-        <p><UserPasswod changed={this.usernamePasswordChangeHandler} /></p>
+        <p><UserPassword changed={this.usernamePasswordChangeHandler} /></p>
         <UserOutput userName={this.state.username} password={this.state.password} />
         <UserOutput userName="Piotr" />
         <UserOutput userName="Piotr" />
