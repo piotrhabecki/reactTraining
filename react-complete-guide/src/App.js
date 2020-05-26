@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
-
-import Person from './Person/Person'
+//import './App.css';
+import classes from './App.css';
+import Person from './Person/Person';
 
 
 class App extends Component {
@@ -65,41 +65,44 @@ class App extends Component {
   render() {
 
     let persons = null;
+    let btnClass = '';
 
-    if(this.state.showPersons) {
+    if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((persons, index) => {
-            return <Person 
-            click={() => this.deletePersonHandler(index)}
-            name={persons.name} 
-            job={persons.job}
-            key={index}
-            changed={(event) => this.nameChangedHandler(event, persons.id)} />
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={persons.name}
+              job={persons.job}
+              key={persons.id}
+              changed={(event) => this.nameChangedHandler(event, persons.id)} />
           })}
 
-      </div> 
+        </div>
       );
+      btnClass = classes.Red;
     }
     
-    const classes = [];
+    const assignedClasses = [];
     if(this.state.persons.length <= 2)
     {
-      classes.push('red');  //classes = ['red']
+      assignedClasses.push(classes.red);  //classes = ['red']
     }
     if (this.state.persons.length <= 1)
     {
-      classes.push('bold') // classes = ['red', 'bold']
+      assignedClasses.push(classes.bold) // classes = ['red', 'bold']
     }
+    
 
     return (
-      <div className="App">
+      <div className={classes.App}>
 
         <h1>I'm react page</ h1>
-        <p className={classes.join(' ')}>Check dynamic classes</p>
+        <p className={assignedClasses.join(' ')}>Check dynamic classes</p>
 
-        <button
-          //alt={this.state.showPersons}
+        <button 
+          className={btnClass}
           onClick={this.togglePersonsHandler}>
             {this.whatToWrite()} persons
           </button>
